@@ -133,6 +133,26 @@
       root.setProperty('--g5', g5);
     });
   </script>
+  <script>
+  function setThemeColor(color) {
+    let metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if (!metaThemeColor) {
+      metaThemeColor = document.createElement("meta");
+      metaThemeColor.setAttribute("name", "theme-color");
+      document.head.appendChild(metaThemeColor);
+    }
+    metaThemeColor.setAttribute("content", color);
+  }
+
+  // Apply based on dark/light mode
+  const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  setThemeColor(darkMode ? "#28a745" : "#28a745");
+
+  // Listen for changes
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
+    setThemeColor(e.matches ? "#28a745" : "#28a745");
+  });
+</script>
 </body>
 
 </html>
