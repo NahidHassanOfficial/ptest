@@ -4,16 +4,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Manifest -->
   <link rel="manifest" href="https://nahidhassanofficial.github.io/ptest/manifest.json">
 
-  <!-- iOS standalone app settings -->
+  <!-- PWA iOS support -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-  <!-- Static green theme color (works in both light & dark) -->
-  <meta name="theme-color" content="#28a745">
+  <!-- Theme color (will be updated dynamically with JS) -->
+  <meta name="theme-color" content="#28a745" id="theme-color">
 
   <title>Hello 🌈</title>
+
   <style>
     :root {
       --g1: #ff6b6b;
@@ -21,10 +24,13 @@
       --g3: #1dd1a1;
       --g4: #54a0ff;
       --g5: #a66bff;
+
+      /* Let browser know we support both themes */
+      color-scheme: light dark;
     }
 
     * {
-      box-sizing: border-box
+      box-sizing: border-box;
     }
 
     body {
@@ -118,11 +124,30 @@
   </main>
 
   <script>
+    // ---- Dynamic theme-color handling ----
+    const themeMeta = document.getElementById("theme-color");
+
+    function applyThemeColor() {
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        themeMeta.setAttribute("content", "#28a745"); // Dark mode status bar
+      } else {
+        themeMeta.setAttribute("content", "#28a745"); // Light mode status bar
+      }
+    }
+
+    applyThemeColor();
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyThemeColor);
+
+    // ---- Shuffle button logic ----
     const colors = [
       '#ff6b6b', '#ff9ff3', '#feca57', '#1dd1a1', '#54a0ff',
       '#a66bff', '#f368e0', '#48dbfb', '#ffdd59', '#0be881'
     ];
-    function rand() { return colors[Math.floor(Math.random() * colors.length)]; }
+
+    function rand() {
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
     document.getElementById('shuffle').addEventListener('click', () => {
       const picked = new Set();
       while (picked.size < 5) picked.add(rand());
@@ -135,26 +160,6 @@
       root.setProperty('--g5', g5);
     });
   </script>
-  <script>
-  function setThemeColor(color) {
-    let metaThemeColor = document.querySelector("meta[name=theme-color]");
-    if (!metaThemeColor) {
-      metaThemeColor = document.createElement("meta");
-      metaThemeColor.setAttribute("name", "theme-color");
-      document.head.appendChild(metaThemeColor);
-    }
-    metaThemeColor.setAttribute("content", color);
-  }
-
-  // Apply based on dark/light mode
-  const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  setThemeColor(darkMode ? "#28a745" : "#28a745");
-
-  // Listen for changes
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
-    setThemeColor(e.matches ? "#28a745" : "#28a745");
-  });
-</script>
 </body>
 
 </html>
