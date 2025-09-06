@@ -5,11 +5,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="manifest" href="https://nahidhassanofficial.github.io/ptest/manifest.json">
+
+  <!-- iOS standalone app settings -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#28a745">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#28a745">
 
+  <!-- Static green theme color (works in both light & dark) -->
+  <meta name="theme-color" content="#28a745">
 
   <title>Hello 🌈</title>
   <style>
@@ -117,11 +119,11 @@
 
   <script>
     const colors = [
-      '#ff6b6b', '#ff9ff3', '#feca57', '#1dd1a1', '#54a0ff', '#a66bff', '#f368e0', '#48dbfb', '#ffdd59', '#0be881'
+      '#ff6b6b', '#ff9ff3', '#feca57', '#1dd1a1', '#54a0ff',
+      '#a66bff', '#f368e0', '#48dbfb', '#ffdd59', '#0be881'
     ];
     function rand() { return colors[Math.floor(Math.random() * colors.length)]; }
     document.getElementById('shuffle').addEventListener('click', () => {
-      // pick five distinct colors
       const picked = new Set();
       while (picked.size < 5) picked.add(rand());
       const [g1, g2, g3, g4, g5] = [...picked];
